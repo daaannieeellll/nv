@@ -1,8 +1,7 @@
 return {
   {
     "L3MON4D3/LuaSnip",
-    build = vim.fn.has("win32") == 0 and
-        "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp" or nil,
+    build = vim.fn.has("win32") == 0 and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp" or nil,
     dependencies = { "rafamadriz/friendly-snippets" },
     opts = {
       history = true,
@@ -11,8 +10,7 @@ return {
     },
     config = function(_, opts)
       if opts then require("luasnip").config.setup(opts) end
-      vim.tbl_map(function(type) require("luasnip.loaders.from_" .. type).lazy_load() end,
-        { "vscode", "snipmate", "lua" })
+      vim.tbl_map(function(type) require("luasnip.loaders.from_" .. type).lazy_load() end, { "vscode", "snipmate", "lua" })
     end,
   },
   {
@@ -43,9 +41,7 @@ return {
       return {
         enabled = function()
           local dap_prompt = utils.is_available("cmp-dap") -- add interoperability with cmp-dap
-              and
-              vim.tbl_contains({ "dap-repl", "dapui_watches", "dapui_hover" },
-                vim.api.nvim_get_option_value("filetype", { buf = 0 }))
+            and vim.tbl_contains({ "dap-repl", "dapui_watches", "dapui_hover" }, vim.api.nvim_get_option_value("filetype", { buf = 0 }))
           if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" and not dap_prompt then return false end
           return vim.g.cmp_enabled
         end,
@@ -108,9 +104,9 @@ return {
         },
         sources = cmp.config.sources({
           { name = "nvim_lsp", priority = 1000 },
-          { name = "luasnip",  priority = 750 },
-          { name = "buffer",   priority = 500 },
-          { name = "path",     priority = 250 },
+          { name = "luasnip", priority = 750 },
+          { name = "buffer", priority = 500 },
+          { name = "path", priority = 250 },
         }),
       }
     end,
@@ -118,12 +114,15 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      "zbirenbaum/copilot.lua",
+      -- "zbirenbaum/copilot.lua",
       {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
         event = "User NVFile",
-        opts = { suggestion = { auto_trigger = true, debounce = 150 } },
+        opts = {
+          suggestion = { auto_trigger = true, debounce = 150 },
+          filetypes = { markdown = true },
+        },
       },
     },
     opts = function(_, opts)
